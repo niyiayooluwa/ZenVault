@@ -109,7 +109,7 @@ fun CardsScreen(navController: NavController) {
                 )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -123,7 +123,7 @@ fun CardsScreen(navController: NavController) {
                     )
             ) {
                 items(mycard.size) { index ->
-                    CardItem(index)
+                    CardItem(index, navController)
                 }
             }
         }
@@ -134,7 +134,8 @@ fun CardsScreen(navController: NavController) {
 
 @Composable
 fun CardItem(
-    index: Int
+    index: Int,
+    navController: NavController
 ) {
     if (!mycard[index].isLinkedNewCard) {
         val card = mycard[index]
@@ -146,7 +147,11 @@ fun CardItem(
 
         Box(
             modifier = Modifier
-                .clickable {}
+                .clickable {
+                    if (index == 0) {
+                        navController.navigate("cardDetails")
+                    }
+                }
         ){
             Box(
                 modifier = Modifier

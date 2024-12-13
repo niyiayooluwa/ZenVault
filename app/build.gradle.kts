@@ -58,8 +58,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation ("com.github.prime-zs.toolkit:core-ktx:2.2.5")
-
     //Navigation
     // Views/Fragments Integration
     implementation ("androidx.navigation:navigation-fragment:2.8.5")

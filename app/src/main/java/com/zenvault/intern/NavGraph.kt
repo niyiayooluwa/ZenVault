@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.zenvault.intern.screens.BudgetScreen
+import com.zenvault.intern.screens.CardsDetails
 import com.zenvault.intern.screens.CardsScreen
 import com.zenvault.intern.screens.Dashboard
 import com.zenvault.intern.screens.InvestScreen
@@ -20,6 +21,7 @@ fun NavGraph(
     NavHost(navController = navController, startDestination = "dashboard") {
         composable("dashboard") { Dashboard(navController) }
         composable("cards") { CardsScreen(navController) }
+        composable("cardDetails") { CardsDetails(navController) }
         composable("save") { SaveScreen(navController) }
         composable("invest") { InvestScreen(navController) }
         composable("budget") { BudgetScreen(navController) }

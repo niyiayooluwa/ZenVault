@@ -12,8 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.primex.core.ExperimentalToolkitApi
-import com.primex.core.blur.legacyBackgroundBlur
 import com.zenvault.intern.data.BottomNavigation
 
 val items = listOf(
@@ -44,8 +42,6 @@ val items = listOf(
     ),
 )
 
-
-@OptIn(ExperimentalToolkitApi::class)
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     // Observe the current navigation backstack entry
@@ -55,11 +51,7 @@ fun BottomNavigationBar(navController: NavController) {
     NavigationBar {
         Row(
             modifier = Modifier
-                .legacyBackgroundBlur(
-                    radius = 20.0f,
-                    downsample = 0.4f
-                )
-                .background(Color.White.copy(0.7f))
+                .background(Color.White)
         ) {
             items.forEach { item ->
                 NavigationBarItem(

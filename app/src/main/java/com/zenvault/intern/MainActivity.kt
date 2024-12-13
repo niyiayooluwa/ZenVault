@@ -39,7 +39,7 @@ private fun SetBackgroundColor(color: Color) {
     val systemUiController = rememberSystemUiController()
     SideEffect {
         systemUiController.run {
-            setSystemBarsColor(color = color)
+            setSystemBarsColor(color = Color.White)
         }
     }
 }
