@@ -19,18 +19,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.zenvault.intern.R
 import com.zenvault.intern.data.Card
 
@@ -70,13 +71,8 @@ val mycard = listOf(
     ),
 )
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    device = "spec:width=412dp,height=917dp"
-)
 @Composable
-fun CardsScreen() {
+fun CardsScreen(navController: NavController) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
     ) { padding ->
@@ -94,13 +90,17 @@ fun CardsScreen() {
                     .fillMaxWidth()
                     .padding(vertical = 16.dp, horizontal = 16.dp)
             ){
-                Icon(
-                    Icons.Rounded.ArrowBackIosNew,
-                    contentDescription = "Arrow back",
-                    modifier = Modifier.size(16.dp)
-                )
+                IconButton(
+                    onClick = { navController.popBackStack() }
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.ArrowBackIosNew,
+                        contentDescription = "Back",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
                     text = "Cards",
@@ -114,7 +114,13 @@ fun CardsScreen() {
             LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 16.dp
+                    )
             ) {
                 items(mycard.size) { index ->
                     CardItem(index)

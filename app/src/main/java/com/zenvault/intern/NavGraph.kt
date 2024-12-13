@@ -19,7 +19,7 @@ fun NavGraph(
 ) {
     NavHost(navController = navController, startDestination = "dashboard") {
         composable("dashboard") { Dashboard(navController) }
-        composable("cards") { CardsScreen() }
+        composable("cards") { CardsScreen(navController) }
         composable("save") { SaveScreen(navController) }
         composable("invest") { InvestScreen(navController) }
         composable("budget") { BudgetScreen(navController) }
