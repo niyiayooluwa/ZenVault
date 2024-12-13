@@ -118,7 +118,7 @@ fun CardsDetails(navController: NavController) {
             Spacer(modifier = Modifier.height(24.dp))
 
             Column(
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier.padding(horizontal = 16.dp).fillMaxHeight()
 
             ){
@@ -571,42 +571,48 @@ fun Details() {
                 }
             }
 
-            //Exp Date
-            Column {
-                Text(
-                    text = "EXP DATE",
-                    fontSize = 14.sp,
-                    color = Color(0xFF64748B),
-                    fontWeight = FontWeight.Medium
-                )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                //Exp Date
+                Column {
+                    Text(
+                        text = "EXP DATE",
+                        fontSize = 14.sp,
+                        color = Color(0xFF64748B),
+                        fontWeight = FontWeight.Medium
+                    )
 
-                Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(6.dp))
 
-                Text(
-                    text = "09/24",
-                    fontSize = 16.sp,
-                    color = Color(0xFF121212),
-                    fontWeight = FontWeight.Medium
-                )
-            }
+                    Text(
+                        text = "09/24",
+                        fontSize = 16.sp,
+                        color = Color(0xFF121212),
+                        fontWeight = FontWeight.Medium
+                    )
+                }
 
-            //CVV
-            Column {
-                Text(
-                    text = "CVV (SECURITY CODE)",
-                    fontSize = 14.sp,
-                    color = Color(0xFF64748B),
-                    fontWeight = FontWeight.Medium
-                )
+                //CVV
+                Column {
+                    Text(
+                        text = "CVV (SECURITY CODE)",
+                        fontSize = 14.sp,
+                        color = Color(0xFF64748B),
+                        fontWeight = FontWeight.Medium
+                    )
 
-                Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(6.dp))
 
-                Text(
-                    text = "249",
-                    fontSize = 16.sp,
-                    color = Color(0xFF121212),
-                    fontWeight = FontWeight.Medium
-                )
+                    Text(
+                        text = "249",
+                        fontSize = 16.sp,
+                        color = Color(0xFF121212),
+                        fontWeight = FontWeight.Medium
+                    )
+                }
             }
         }
     }
