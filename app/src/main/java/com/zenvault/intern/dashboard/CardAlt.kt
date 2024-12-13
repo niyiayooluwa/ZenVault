@@ -1,4 +1,4 @@
-package com.zenvault.intern.home
+package com.zenvault.intern.dashboard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -25,10 +25,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.zenvault.intern.R
 import com.zenvault.intern.data.Card
 
-val card = listOf(
+val cards = listOf(
 
     Card(
         cardType = "MasterCard",
@@ -64,10 +65,12 @@ val card = listOf(
     ),
     )
 
-@Preview(showBackground = false)
 @Composable
-fun CardAlt() {
+fun CardAlt(navController: NavController) {
     LazyRow(modifier = Modifier
+        .clickable {
+            navController.navigate("cards")
+        }
         .padding(
             start = 16.dp,
             end = 16.dp,
@@ -84,7 +87,7 @@ fun CardAlt() {
 @Composable
 fun CardItems(
     index: Int
-) {
+)   {
     if (!cards[index].isLinkedNewCard) {
         val card = cards[index]
         var lastItemPaddingEnd = 16.dp
@@ -109,10 +112,9 @@ fun CardItems(
                     .clip(RoundedCornerShape(12.dp))
                     .width(200.dp)
                     .height(125.93.dp)
-                    .clickable {}
             ){
                 Image(
-                    painter = painterResource(id = imageResources[card.imageIndex]),
+                    painter = painterResource(id = imageResourced[card.imageIndex]),
                     contentDescription = "Card Image",
                     modifier = Modifier.fillMaxSize()
                 )
@@ -176,10 +178,9 @@ fun CardItems(
                     .clip(RoundedCornerShape(12.dp))
                     .width(200.dp)
                     .height(125.93.dp)
-                    .clickable {}
             ){
                 Image(
-                    painter = painterResource(id = imageResources[card.imageIndex]),
+                    painter = painterResource(id = imageResourced[card.imageIndex]),
                     contentDescription = "Card Image",
                     modifier = Modifier.fillMaxSize()
                 )
@@ -214,7 +215,7 @@ fun CardItems(
 
 
 // List of image resource IDs
-val imageResource = listOf(
+val imageResourced = listOf(
     R.drawable.card_blue, // Index 0
     R.drawable.card_red,  // Index 1
     R.drawable.card_purple, // Index 2

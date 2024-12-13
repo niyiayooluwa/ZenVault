@@ -1,4 +1,4 @@
-package com.zenvault.intern.home
+package com.zenvault.intern.dashboard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -58,6 +58,23 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //Navigation
+    // Views/Fragments Integration
+    implementation ("androidx.navigation:navigation-fragment:2.8.5")
+    implementation ("androidx.navigation:navigation-ui:2.8.5")
+
+    // Feature module support for Fragments
+    implementation ("androidx.navigation:navigation-dynamic-features-fragment:2.8.5")
+
+    // Testing Navigation
+    androidTestImplementation ("androidx.navigation:navigation-testing:2.8.5")
+
+    // JSON serialization library, works with the Kotlin serialization plugin.
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+
+    // Jetpack Compose Integration
+    implementation ("androidx.navigation:navigation-compose:2.8.5")
+
     //system UI controller
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 

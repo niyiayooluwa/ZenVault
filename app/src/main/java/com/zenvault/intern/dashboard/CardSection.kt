@@ -1,4 +1,4 @@
-package com.zenvault.intern.home
+package com.zenvault.intern.dashboard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.zenvault.intern.R
 import com.zenvault.intern.data.Card
 
-val cards = listOf(
+val cardss = listOf(
 
     Card(
         cardType = "MasterCard",
@@ -86,10 +86,10 @@ fun CardSection() {
 fun CardItem(
     index: Int
 ) {
-    val card = cards[index]
+    val card = cardss[index]
     var lastItemPaddingEnd = 16.dp
 
-    if (index == cards.size - 1) {
+    if (index == cardss.size - 1) {
         lastItemPaddingEnd = 0.dp
     }
 
