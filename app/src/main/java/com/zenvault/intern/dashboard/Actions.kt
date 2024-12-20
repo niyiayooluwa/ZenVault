@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,17 +22,14 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.zenvault.intern.R
 
 
-@Preview(
-    showBackground = true
-)
 @Composable
-fun QuickActions() {
+fun Actions(navController: NavController) {
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -46,54 +44,26 @@ fun QuickActions() {
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    bottom = 8.dp
-                )
-        ) {
-            Text(
-                text = "Quick Actions",
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 12.sp,
-                color = Color(0xFF7f7f7f)
-            )
-
-            Text(
-                text = "EDIT",
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 12.sp,
-                color = Color(0xFF10b982),
-                modifier = Modifier.clickable {}
-            )
-        }
-
-
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            QuickActionsItems(
-                icon = R.drawable.phone,
-                title = "Airtime"
+            ActionsItems(
+                icon = R.drawable.transfer,
+                title = "Transfer",
+                onClick = {navController.navigate("transfer")}
             )
 
-            QuickActionsItems(
-                icon = R.drawable.wifi,
-                title = "Internet"
+            ActionsItems(
+                icon = R.drawable.deposit,
+                title = "Top Up",
+                onClick = {navController.navigate("topup")}
             )
 
-            QuickActionsItems(
-                icon = R.drawable.tv,
-                title = "TV"
+            ActionsItems(
+                icon = R.drawable.swap,
+                title = "Exchange",
+                onClick = {navController.navigate("exchange")}
             )
-
-            QuickActionsItems(
-                icon = R.drawable.menu,
-                title = "See All"
-            )
-
         }
     }
 }
@@ -103,9 +73,10 @@ fun QuickActions() {
 
 
 @Composable
-private fun QuickActionsItems(
+private fun ActionsItems(
     icon: Int,
-    title: String
+    title: String,
+    onClick: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -114,8 +85,9 @@ private fun QuickActionsItems(
             .shadow(3.dp, RoundedCornerShape(8.dp))
             .clip(RoundedCornerShape(8.dp))
             .background(Color.White)
-            .size(80.dp)
-            .clickable { /* Handle click */ }
+            .height(80.dp)
+            .width(108.dp)
+            .clickable { onClick() }
             .padding(8.dp)
     ) {
         Image(
@@ -130,7 +102,7 @@ private fun QuickActionsItems(
             text = title,
             fontSize = 12.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Color(0xFF00442E)
+            color = Color(0xFF121212)
         )
     }
 }

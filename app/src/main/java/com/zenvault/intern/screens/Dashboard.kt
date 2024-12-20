@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.zenvault.intern.BottomNavigationBar
+import com.zenvault.intern.dashboard.Actions
 import com.zenvault.intern.dashboard.BalanceSection
 import com.zenvault.intern.dashboard.CardAlt
 import com.zenvault.intern.dashboard.DailyRefresh
@@ -50,6 +51,7 @@ fun Dashboard(navController: NavController) {
             ) {
                 BalanceSection()
                 CardAlt(navController)
+                Actions(navController)
                 QuickTransferSection()
                 QuickActions()
                 TransactionHistory()

@@ -102,6 +102,7 @@ fun Statistics() {
                 Text(
                     text = "August 2024",
                     fontSize = 14.sp,
+                    color = Color(0xFF475569),
                     fontWeight =  FontWeight.Medium
                 )
 

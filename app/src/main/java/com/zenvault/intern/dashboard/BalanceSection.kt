@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +28,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zenvault.intern.R
+import com.zenvault.intern.utils.CardOperations.getTotalBalance
+import com.zenvault.intern.utils.formatBalance
 
 @Preview(
     showSystemUi = false,
@@ -47,7 +49,7 @@ fun BalanceSection () {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "₦1,682,780.50",
+            text = formatBalance(getTotalBalance()),
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF121212)
@@ -84,7 +86,7 @@ fun BalanceSection () {
                 //Coin Icon
                 Image(
                     painter = painterResource(R.drawable.ph_coins),
-                    contentDescription = "Ciins",
+                    contentDescription = "Coins",
                     modifier = Modifier.size(12.dp)
                 )
 
@@ -103,7 +105,7 @@ fun BalanceSection () {
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            //With the fulllogic, this part would be like a button to view their cashback details
+            //With the full logic, this part would be like a button to view their cashback details
             Text(
                 text = "Earned Cashback",
                 fontSize = 12.sp,
@@ -113,7 +115,7 @@ fun BalanceSection () {
 
             //Icon >
             Icon(
-                Icons.Rounded.KeyboardArrowRight,
+                Icons.AutoMirrored.Rounded.KeyboardArrowRight,
                 contentDescription = "Arrow right",
                 modifier = Modifier.size(24.dp)
             )

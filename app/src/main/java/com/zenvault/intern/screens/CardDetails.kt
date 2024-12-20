@@ -27,6 +27,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -41,13 +42,21 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.zenvault.intern.R
 import com.zenvault.intern.dashboard.LineUI
-
+import com.zenvault.intern.data.Card
+import com.zenvault.intern.utils.CardItem
+import com.zenvault.intern.utils.CardSize
+import com.zenvault.intern.utils.CardViewModel
+import com.zenvault.intern.utils.formatBalance
 
 @Composable
-fun CardsDetails(navController: NavController) {
+fun CardDetails(
+    viewModel: CardViewModel,
+    navController: NavController
+) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
     ) { padding ->
+        val card by viewModel.selectedCard.observeAsState()
         var showCard by remember { mutableStateOf(true) }
 
         Column(
@@ -58,7 +67,6 @@ fun CardsDetails(navController: NavController) {
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp, horizontal = 16.dp)
@@ -69,15 +77,17 @@ fun CardsDetails(navController: NavController) {
                     Icon(
                         imageVector = Icons.Rounded.ArrowBackIosNew,
                         contentDescription = "Back",
+                        tint = Color(0xff121212),
                         modifier = Modifier.size(24.dp)
                     )
                 }
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
                 Text(
                     text = "Cards",
                     fontSize = 20.sp,
+                    color = Color(0xff121212),
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -92,7 +102,7 @@ fun CardsDetails(navController: NavController) {
                     .height(320.dp)
                     .padding(vertical = 16.dp, horizontal = 16.dp)
             ){
-                DynamicBoxLayout(showCard)
+                card?.let { DynamicBoxLayout(showCard, it) }
             }
 
             //Button that shows the details of the card when clicked
@@ -119,7 +129,9 @@ fun CardsDetails(navController: NavController) {
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.padding(horizontal = 16.dp).fillMaxHeight()
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxHeight()
 
             ){
                 //Manage Transaction Pin
@@ -362,98 +374,21 @@ fun CardsDetails(navController: NavController) {
 
 
 @Composable
-fun DynamicBoxLayout(showCard: Boolean) {
+fun DynamicBoxLayout(showCard: Boolean, card: Card) {
     Box(
         modifier = Modifier.fillMaxWidth()
     ){
         if (showCard) {
-            Card()
+            CardItem(card = card, cardSize = CardSize.Big)
         } else {
-            Details()
+            Details(card)
         }
     }
 }
 
 
 @Composable
-fun Card() {
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(12.dp))
-            .width(380.dp)
-            .height(239.36.dp)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.card_blue),
-            contentDescription = "Card Image",
-            modifier = Modifier.fillMaxSize()
-        )
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 12.dp)
-
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(24.dp)
-            ) {
-                Text(
-                    text = "Main Account",
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    fontSize = 20.sp
-                )
-            }
-
-
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = "₦465,860.16",
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    fontSize = 32.sp
-                )
-            }
-
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = "•• 9783",
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    fontSize = 20.sp
-                )
-
-                Image(
-                    painter = painterResource(R.drawable.mastercard),
-                    contentDescription = "Card Type",
-                    modifier = Modifier.size(40.dp)
-                )
-            }
-        }
-    }
-}
-
-
-@Composable
-fun Details() {
+fun Details(card: Card) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         modifier = Modifier
@@ -469,7 +404,12 @@ fun Details() {
             modifier = Modifier.fillMaxWidth()
         ){
             Image(
-                painter = painterResource(R.drawable.mini),
+                painter = painterResource(id =
+                when (card.imageIndex) {
+                    0 -> R.drawable.mini
+                    1 -> R.drawable.red_mini
+                    else -> R.drawable.purple_mini
+                }),
                 contentDescription = "Card Type",
                 modifier = Modifier
                     .width(76.dp)
@@ -480,7 +420,7 @@ fun Details() {
 
             Column{
                 Text(
-                    text = "Main Account",
+                    text = card.cardName,
                     fontSize = 12.sp,
                     color = Color(0xFF64748B),
                     fontWeight = FontWeight.Medium
@@ -488,12 +428,13 @@ fun Details() {
 
                 Spacer(modifier = Modifier.height(4.dp))
 
+                card.getRawBalance()?.let {
                 Text(
-                    text = "₦465,860.16",
+                    text = formatBalance(it),
                     fontSize = 12.sp,
                     color = Color(0xFF121212),
                     fontWeight = FontWeight.SemiBold
-                )
+                )}
             }
         }
 
@@ -538,13 +479,15 @@ fun Details() {
                     Spacer(modifier = Modifier.height(6.dp))
 
                     Text(
-                        text = "9811 9533 2725 9783",
+                        text = card.cardNumberLong,
                         fontSize = 16.sp,
                         color = Color(0xFF121212),
                         fontWeight = FontWeight.Medium
                     )
                 }
 
+
+                //Copy
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
@@ -571,6 +514,8 @@ fun Details() {
                 }
             }
 
+
+            //Card Exp Date and CVV
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -588,7 +533,7 @@ fun Details() {
                     Spacer(modifier = Modifier.height(6.dp))
 
                     Text(
-                        text = "09/24",
+                        text = card.cardExpDate,
                         fontSize = 16.sp,
                         color = Color(0xFF121212),
                         fontWeight = FontWeight.Medium
@@ -607,7 +552,7 @@ fun Details() {
                     Spacer(modifier = Modifier.height(6.dp))
 
                     Text(
-                        text = "249",
+                        text = card.cardCvv.toString(),
                         fontSize = 16.sp,
                         color = Color(0xFF121212),
                         fontWeight = FontWeight.Medium
@@ -617,6 +562,4 @@ fun Details() {
         }
     }
 }
-
-
 

@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.benchmark.macro)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -80,4 +81,7 @@ dependencies {
 
     //Extended Icons
     implementation("androidx.compose.material:material-icons-extended:1.7.5")
+
+    implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
+
 }
