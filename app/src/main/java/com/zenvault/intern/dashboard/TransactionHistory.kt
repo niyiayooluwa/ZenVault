@@ -110,8 +110,8 @@ fun TransactionHistory(
                 image = R.drawable.mdi_spotify,
                 amount3 = "- ₦1300.00",
                 time = "9:16 AM",
-                title = "Spotify",
-                status = "Transaction Failed"
+                title = "Spotify Subscription",
+                status = "Failed"
             )
         }
     }

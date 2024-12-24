@@ -15,8 +15,10 @@ import com.zenvault.intern.screens.InvestScreen
 import com.zenvault.intern.screens.MoreScreen
 import com.zenvault.intern.screens.SaveScreen
 import com.zenvault.intern.screens.TopUpScreen
+import com.zenvault.intern.screens.TransferCard
 import com.zenvault.intern.screens.TransferScreen
 import com.zenvault.intern.utils.CardViewModel
+import com.zenvault.intern.utils.TransferViewModel
 
 @Composable
 fun NavGraph(
@@ -24,6 +26,7 @@ fun NavGraph(
     modifier: Modifier
 ) {
     val cardViewModel: CardViewModel = viewModel()
+    val transferViewModel: TransferViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = "dashboard") {
         composable("dashboard") { Dashboard(navController) }
@@ -31,15 +34,11 @@ fun NavGraph(
         composable("invest") { InvestScreen(navController) }
         composable("budget") { BudgetScreen(navController) }
         composable("more") { MoreScreen(navController) }
-        composable("transfer") { TransferScreen(navController) }
+        composable("transfer") { TransferScreen(navController, transferViewModel) }
         composable("topup") { TopUpScreen(navController) }
         composable("exchange") { ExchangeScreen(navController) }
-        composable("cards") {
-            CardsScreen(viewModel = cardViewModel, navController = navController)
-        }
-        composable("details") {
-            CardDetails(viewModel = cardViewModel, navController = navController)
-        }
-
+        composable("cards") { CardsScreen(cardViewModel, navController) }
+        composable("details") { CardDetails(cardViewModel, navController)}
+        composable("transferCard") { TransferCard(navController, transferViewModel) }
     }
 }

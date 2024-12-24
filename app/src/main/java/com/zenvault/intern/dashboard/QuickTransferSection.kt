@@ -5,10 +5,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -69,23 +71,26 @@ fun QuickTransferSection () {
             modifier = Modifier.fillMaxWidth()
         ){
             QuickTransferBox(
-                image = R.drawable.frame_7,
+                image = R.drawable.add_outline, text = "Add"
+            )
+            QuickTransferBox(
+                image = R.drawable.frame_7, text = "Will"
             )
 
             QuickTransferBox(
-                image = R.drawable.frame_8,
+                image = R.drawable.frame_8, text = "Lebron"
             )
 
             QuickTransferBox(
-                image = R.drawable.frame_9,
+                image = R.drawable.frame_9, "Anissa"
             )
 
             QuickTransferBox(
-                image = R.drawable.frame_10,
+                image = R.drawable.frame_10, "Lee"
             )
 
             QuickTransferBox(
-                image = R.drawable.frame_11,
+                image = R.drawable.frame_11,"Anna"
             )
         }
     }
@@ -96,21 +101,30 @@ fun QuickTransferSection () {
 @Composable
 fun QuickTransferBox(
     image : Int,
+    text : String
 ) {
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .clickable {}
-            .size(60.dp)
     ) {
         Image(
             painter = painterResource(id = image),
             contentDescription = "Quick Transfer Image",
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .clip(RoundedCornerShape(4.dp))
-                .size(60.dp)
+                .clip(CircleShape)
+                .size(35.dp)
+        )
+
+        Spacer(Modifier.height(4.dp))
+
+        Text(
+            text = text,
+            fontSize = 10.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xff475569),
         )
     }
 }
