@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.zenvault.intern.data.card
 import com.zenvault.intern.screens.BudgetScreen
 import com.zenvault.intern.screens.CardDetails
 import com.zenvault.intern.screens.CardsScreen
@@ -39,6 +40,6 @@ fun NavGraph(
         composable("exchange") { ExchangeScreen(navController) }
         composable("cards") { CardsScreen(cardViewModel, navController) }
         composable("details") { CardDetails(cardViewModel, navController)}
-        composable("transferCard") { TransferCard(navController, transferViewModel) }
+        composable("completeTransfer") { TransferCard(navController, transferViewModel, card) }
     }
 }

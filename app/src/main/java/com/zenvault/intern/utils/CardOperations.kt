@@ -12,8 +12,8 @@ object CardOperations {
         card?.deposit(amount)
     }
 
-    // Transfer method
-    fun transfer(fromCardNumber: String, toCardNumber: String, amount: Double) {
+    // Swap method
+    fun swap(fromCardNumber: String, toCardNumber: String, amount: Double) {
         val fromCard = cards.find { it.cardNumber == fromCardNumber }
         val toCard = cards.find { it.cardNumber == toCardNumber }
 
@@ -21,6 +21,12 @@ object CardOperations {
             fromCard.withdraw(amount)
             toCard.deposit(amount)
         }
+    }
+
+    //Withdraw method
+    fun withdraw(cardNumber: String, amount: Double) {
+        val card = cards.find { it.cardNumber == cardNumber }
+        card?.withdraw(amount)
     }
 
     // Get total balance across all cards

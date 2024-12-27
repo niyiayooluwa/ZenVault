@@ -24,10 +24,12 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -94,14 +96,14 @@ fun TransferScreen(
                     .padding(16.dp)
                     .background(Color.White)
             ) {
-                RecipientAccount()
+                RecipientAccount(viewModel)
 
                 Button(
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF10B982),
                         contentColor = Color.White
                     ),
-                    onClick = {navController.navigate("transferCard")},
+                    onClick = {navController.navigate("completeTransfer") },
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -121,13 +123,15 @@ fun TransferScreen(
 
 
 @Composable
-fun RecipientAccount(viewModel: TransferViewModel = viewModel()) {
+fun RecipientAccount(viewModel: TransferViewModel) {
+    val accountNumber by viewModel.accountNumber.observeAsState("")
     Column {
+        //Text field for entering account number
         OutlinedTextField(
-            value = viewModel.accountNumber.value,
+            value = accountNumber,
             onValueChange = {userText ->
                 if (userText.length <= 10 && userText.matches(Regex("[0-9]*"))) {
-                    viewModel.accountNumber.value = userText
+                    viewModel.setAccountNumber(userText)
                 }
             },
             label = {
@@ -139,12 +143,15 @@ fun RecipientAccount(viewModel: TransferViewModel = viewModel()) {
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
             ),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color(0xFF121212),
+                unfocusedTextColor = Color(0xFF121212),
+            ),
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
-
         Spacer(Modifier.height(12.dp))
 
         BankDropdown(viewModel)
@@ -158,9 +165,9 @@ fun RecipientAccount(viewModel: TransferViewModel = viewModel()) {
 @Composable
 fun BankDropdown(viewModel: TransferViewModel) {
     val allBanks = remember { generateBankList() }
-
+    val selectedBank by viewModel.selectedBank.observeAsState("")
     // Determine the first digit of the account number
-    val firstDigit = viewModel.accountNumber.value.firstOrNull()?.digitToInt()
+    val firstDigit = viewModel.accountNumber.value?.firstOrNull()?.digitToInt()
 
     // Get the 2 banks based on the first digit
     val banksToShow = getBanksBasedOnFirstDigit(firstDigit ?: 0, allBanks)
@@ -170,10 +177,14 @@ fun BankDropdown(viewModel: TransferViewModel) {
     Column {
         // Text field to show selected bank
         OutlinedTextField(
-            value = viewModel.selectedBank.value,
+            value = selectedBank,
             onValueChange = {},
             label = { Text("Select Bank") },
             readOnly = true,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color(0xFF121212),
+                unfocusedTextColor = Color(0xFF121212),
+            ),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             trailingIcon = {
                 Icon(
@@ -203,7 +214,7 @@ fun BankDropdown(viewModel: TransferViewModel) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                viewModel.selectedBank.value = bank
+                                viewModel.setSelectedBank(bank)
                                 isDropdownOpen = false
                             }
                             .padding(16.dp)
@@ -222,7 +233,7 @@ fun generateBankList(): List<String> {
         "Horizon", "Regal", "Sovereign", "Nimbus", "Titan",
         "Astral", "Vanguard", "Noble", "Fusion", "Prism"
     )
-    val suffixes = listOf("MFB", "Bank", "Digital Services", "Wallet")
+    val suffixes = listOf("MFB", "Bank", "Digital", "Wallet")
 
     return baseWords.map { word ->
         val randomSuffix = suffixes.random() // Pick a random suffix

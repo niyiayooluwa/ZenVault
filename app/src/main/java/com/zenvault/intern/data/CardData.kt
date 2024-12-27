@@ -46,3 +46,7 @@ val card = mutableListOf(
         isLinkedNewCard = true
     ),
 )
+
+fun main() {
+    card[0].getCardBalance()
+}

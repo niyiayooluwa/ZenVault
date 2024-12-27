@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -48,7 +49,7 @@ fun BottomNavigationBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    NavigationBar {
+    NavigationBar() {
         Row(
             modifier = Modifier
                 .background(Color.White)
@@ -76,6 +77,7 @@ fun BottomNavigationBar(navController: NavController) {
                             tint = if (currentRoute == item.route) Color(0xFF10b892) else Color(0xFF121212)
                         )
                     },
+                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color(0xFFBFFFEA))
                     /*label = {
                         Text(
                             text = item.title,
