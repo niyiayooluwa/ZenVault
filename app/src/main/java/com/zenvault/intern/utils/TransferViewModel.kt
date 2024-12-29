@@ -12,18 +12,32 @@ class TransferViewModel : ViewModel() {
     private val _selectedBank = MutableLiveData<String>("")
     val selectedBank: LiveData<String> = _selectedBank
 
-    private val _amount = MutableLiveData<String>("")
-    val amount: LiveData<String> = _amount
-
     private val _name = MutableLiveData<String>("")
     val name: LiveData<String> get() = _name
 
 
     init{_name.value = generateName()}
 
+
+
+
+
+
+
+    private val _amount = MutableLiveData<String>("")
+    val amount: LiveData<String> = _amount
+
     fun setAmount(amount: String) {
         _amount.value = amount
     }
+
+
+
+
+
+
+
+
 
     fun setAccountNumber(number: String) {
         _accountNumber.value = number

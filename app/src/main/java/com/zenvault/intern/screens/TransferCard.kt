@@ -81,7 +81,9 @@ fun TransferCard(
     var selectedCard by remember { mutableStateOf(defaultCard) }
     var expanded by remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf(false)}
-
+    val stringAmount = if (amount.isNotEmpty()) {
+        formatBalance(amount.toDouble())
+    } else {""}
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -499,9 +501,10 @@ fun TransferCard(
                 onDismiss = { dialog = false},
                 recipientName = name,
                 accountName = selectedCard.cardName,
-                paymentAmount = amount,
+                paymentAmount = stringAmount,
                 transactionDate = "27/12/2024",
-                transactionId = "#A78IXL01GG"
+                transactionId = "#A78IXL01GG",
+                navController = navController
             )
         }
     }
@@ -586,7 +589,8 @@ fun TransactionConfirmationDialog(
     accountName: String, // Name of the account used for payment
     paymentAmount: String, // Payment amount to be displayed
     transactionDate: String, // Date of the transaction
-    transactionId: String // Unique identifier for the transaction
+    transactionId: String, // Unique identifier for the transaction
+    navController: NavController
 ) {
     // Check if the dialog should be displayed
     if (showDialog) {
@@ -814,16 +818,11 @@ fun TransactionConfirmationDialog(
 
                         // Exit button
                         Button(
-                            onClick = {}, // Action for exiting
+                            onClick = {navController.navigate("dashboard")}, // Action for exiting
                             modifier = Modifier
-                                .weight(1f) // Equal width for buttons
-                                .border(
-                                    width = 2.dp, // Border width
-                                    color = Color(0xFF10b982), // Border color
-                                    shape = RoundedCornerShape(24.dp) // Rounded corners for button
-                                ),
+                                .weight(1f), // Equal width for button
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Transparent // Transparent background
+                                containerColor = Color(0xFFE1f5ea) // Colored Background
                             )
                         ) {
                             Text(
